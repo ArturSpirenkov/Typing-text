@@ -3,10 +3,12 @@ import { paragraphs } from "./paragraph.js";
 const typingText = document.querySelector(".typing-text p");
 const inputField = document.querySelector(".wrapper .input-field");
 const mistakeTag = document.querySelector(".mistake span");
+const timeCount = document.querySelector(".result-details .time span");
+const speedTyping = document.querySelector(".result-details .wpm span");
 
 let mistakes = 0;
-// let maxTime = 60;
-// let timeLeft = maxTime;
+let maxTime = 60;
+let timeLeft = maxTime;
 
 
 function randomParagraphs() {
@@ -42,18 +44,40 @@ function initTyping(e) {
   }
 }
 
+function currentTyping() {
+  if(60 - timeLeft == 0) {
+    speedTyping.innerHTML = 0;
+    return;
+  }
+  let speed = (inputField.value.length / (60 - timeLeft)) * 60;
+  speedTyping.innerHTML = ~~speed;
+}
+
+function changeTime() {
+  timeCount.innerHTML = timeLeft;
+  if (timeLeft > 0) {
+    timeLeft--;
+    setTimeout(()=> changeTime(), 1000);
+  } else {
+    clearInterval();
+  }
+}
+
+inputField.addEventListener("input", initTyping);
 randomParagraphs();
 initTyping();
-inputField.addEventListener("input", initTyping);
+changeTime();
+setInterval(currentTyping, 1000);
 
 
-// function changeTime() {
-//   if (timeLeft > 0) {
-//     timeLeft--;
-//   } else {
-//     clearInterval();
-//   }
-// }
+
+
+
+
+
+
+
+
 
 
 

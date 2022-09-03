@@ -27,9 +27,7 @@ body {
   border: 2px solid #178CA4;
   padding: 13px 20px 0;
   border-radius: 10px;
-  
   background-color: #F9F7f0;
-  
 }
 
 .typing-text::-webkit-scrollbar {
@@ -38,7 +36,6 @@ body {
 
 .typing-text p span.correct {
   color: #56964f;
-  
 }
 .typing-text p span.active {
   color: #17a2b8;
@@ -102,7 +99,8 @@ body {
 
 .content button:active {
   /* transform: scale(0.95); */
-  transform: scale(0.95)
+  transform: scale(0.90);
+  transition: transform 0.1s ease;
 }
 
 .content button {
