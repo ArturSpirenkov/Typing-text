@@ -6,7 +6,6 @@ const mistakeTag = document.querySelector(".mistake span");
 const timeCount = document.querySelector(".result-details .time span");
 const speedTyping = document.querySelector(".result-details .wpm span");
 
-let mistakes = 0;
 let maxTime = 60;
 let timeLeft = maxTime;
 
@@ -23,6 +22,7 @@ function randomParagraphs() {
 }
 
 function initTyping(e) {
+  let mistakes = 0;
   let charsInput = inputField.value.length;
   let typedChar = inputField.value.split(''); 
   const textCharacters = typingText.querySelectorAll('span');  
@@ -36,13 +36,19 @@ function initTyping(e) {
         textCharacters[i].classList.add("correct");
       } else {
         textCharacters[i].classList.add("incorrect");
+        mistakes++;
       }
     }
   }
   if (textCharacters[charsInput]) {
   textCharacters[charsInput].classList.add("active");
   }
+  displayMistakes(mistakes);
 }
+
+function displayMistakes(mistakes) {
+  mistakeTag.innerHTML = mistakes;
+};
 
 function currentTyping() {
   if(60 - timeLeft == 0) {
@@ -54,32 +60,20 @@ function currentTyping() {
 }
 
 function changeTime() {
-  timeCount.innerHTML = timeLeft;
-  if (timeLeft > 0) {
-    timeLeft--;
-    setTimeout(()=> changeTime(), 1000);
-  } else {
-    clearInterval();
+  if(inputField.value.length != 0) {
+    timeCount.innerHTML = timeLeft;
+    if (timeLeft > 0) {
+      timeLeft--;
+    } else {
+      clearInterval();
+    }
   }
+  currentTyping();
+  return setTimeout(changeTime, 1000);
 }
+
+
 
 inputField.addEventListener("input", initTyping);
 randomParagraphs();
-initTyping();
 changeTime();
-setInterval(currentTyping, 1000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
